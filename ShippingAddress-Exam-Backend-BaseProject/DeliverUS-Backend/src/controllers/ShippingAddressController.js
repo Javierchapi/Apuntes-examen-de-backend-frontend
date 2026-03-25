@@ -15,17 +15,16 @@ const ShippingAddressController = {
     try {
       const newAddress = ShippingAddress.build(req.body)
       newAddress.userId = req.user.id
-
-      // RF2: LA TRAMPA DEL EXAMEN. Si es la primera dirección, se marca como predeterminada automáticamente.
+      // RF2: LA TRAMPA DEL EXAMEN. Si es la primera dirección, se marca como predeterminada
       const count = await ShippingAddress.count({ where: { userId: req.user.id } })
       if (count === 0) {
         newAddress.isDefault = true
       } else {
         newAddress.isDefault = false
       }
-
-      await newAddress.save()
-      res.json(newAddress)
+      const savedAddress = await newAddress.save()
+      // ¡AQUÍ ESTÁ LA MAGIA! Le decimos que devuelva un 201 (Created) en vez de un 200 normal
+      res.status(201).json(savedAddress)
     } catch (err) {
       res.status(500).send(err.message)
     }
@@ -66,13 +65,11 @@ const ShippingAddressController = {
         { isDefault: false },
         { where: { userId: req.user.id } }
       )
-
       // Segundo, le ponemos 'isDefault: true' SÓLO a la que nos han pasado por la URL
       await ShippingAddress.update(
         { isDefault: true },
         { where: { id: req.params.shippingAddressId } }
       )
-
       // Por último, buscamos esa dirección actualizada y la devolvemos
       const updatedAddress = await ShippingAddress.findByPk(req.params.shippingAddressId)
       res.json(updatedAddress)
