@@ -60,17 +60,14 @@ const ShippingAddressController = {
 
   async markDefault (req, res) {
     try {
-      // RF3: Primero quitamos el 'isDefault' a TODAS las direcciones del usuario
       await ShippingAddress.update(
         { isDefault: false },
         { where: { userId: req.user.id } }
       )
-      // Segundo, le ponemos 'isDefault: true' SÓLO a la que nos han pasado por la URL
       await ShippingAddress.update(
         { isDefault: true },
         { where: { id: req.params.shippingAddressId } }
       )
-      // Por último, buscamos esa dirección actualizada y la devolvemos
       const updatedAddress = await ShippingAddress.findByPk(req.params.shippingAddressId)
       res.json(updatedAddress)
     } catch (err) {
