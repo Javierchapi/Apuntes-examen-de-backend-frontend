@@ -3,7 +3,7 @@ import { Model } from 'sequelize'
 const loadModel = (sequelize, DataTypes) => {
   class ShippingAddress extends Model {
     static associate (models) {
-      ShippingAddress.belongsTo(models.User, { foreignKey: 'userId', as: 'user'})
+      ShippingAddress.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
     }
   }
 
@@ -35,7 +35,7 @@ const loadModel = (sequelize, DataTypes) => {
     },
     userId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     }
   }, {
     sequelize,

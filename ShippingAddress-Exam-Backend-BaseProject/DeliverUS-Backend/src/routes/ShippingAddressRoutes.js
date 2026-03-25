@@ -4,6 +4,7 @@ import { isLoggedIn, hasRole } from '../middlewares/AuthMiddleware.js'
 import { handleValidation } from '../middlewares/ValidationHandlingMiddleware.js'
 import { checkEntityExists } from '../middlewares/EntityMiddleware.js'
 import { ShippingAddress } from '../models/models.js'
+import ShippingAddressMiddleware from '../middlewares/ShippingAddressMiddleware.js'
 
 const loadShippingAddressRoutes = function (app) {
   app.route('/shippingaddresses')

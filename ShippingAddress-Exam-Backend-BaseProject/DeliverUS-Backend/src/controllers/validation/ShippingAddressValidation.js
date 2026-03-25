@@ -1,4 +1,4 @@
-import { } from 'express-validator'
+import { check } from 'express-validator'
 
 const create = [
   check('alias').exists().isString().isLength({ min: 1, max: 255 }).trim(),
@@ -9,7 +9,7 @@ const create = [
 ]
 
 const update = [
-  // No necesitamos validar el body porque la ruta PATCH /default 
+  // No necesitamos validar el body porque la ruta PATCH /default
   // no recibe datos, solo usa el ID de la URL.
 ]
 

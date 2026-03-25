@@ -14,7 +14,7 @@ const ShippingAddressController = {
   async create (req, res) {
     try {
       const newAddress = ShippingAddress.build(req.body)
-      newAddress.userId = req.user.id 
+      newAddress.userId = req.user.id
 
       // RF2: LA TRAMPA DEL EXAMEN. Si es la primera dirección, se marca como predeterminada automáticamente.
       const count = await ShippingAddress.count({ where: { userId: req.user.id } })
@@ -32,7 +32,7 @@ const ShippingAddressController = {
   },
 
   async update (req, res) {
-    // Aunque el enunciado no pide explícitamente editar todos los campos, 
+    // Aunque el enunciado no pide explícitamente editar todos los campos,
     // lo dejamos bien hecho corrigiendo la sintaxis (es findByPk, con la 'k' minúscula, y sin llaves dentro)
     try {
       await ShippingAddress.update(req.body, { where: { id: req.params.shippingAddressId } })
